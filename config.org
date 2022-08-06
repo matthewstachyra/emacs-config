@@ -42,14 +42,6 @@
   (defalias 'yes-or-no-p 'y-or-n-p)
 #+end_src
 
-** install which-key to help learn commands
-#+begin_src emacs-lisp
-  (add-to-list 'load-path "elpa/which-key-20220518.1941/which-key.el")
-  (use-package which-key)
-  (require 'which-key)
-  (which-key-mode)
-#+end_src
-
 
 ** text and org settings
 #+begin_src emacs-lisp
