@@ -1,0 +1,71 @@
+#+TITLE: emacs config
+#+AUTHOR: matthew stachyra
+
+* package management
+** setup package.el to work with MELPA
+
+#+begin_src emacs-lisp
+  (require 'package)
+  (add-to-list 'package-archives
+	       '("melpa" . "https://melpa.org/packages/"))
+  (package-refresh-contents)
+  (package-initialize)
+#+end_src
+
+** install use-package
+#+begin_src emacs-lisp
+  (unless (package-installed-p 'use-package)
+  (package-install 'use-package)) 
+#+end_src
+
+** install evil mode
+#+begin_src emacs-lisp
+  (use-package evil
+	       :ensure t ;; install evil if not installed
+	       :init     ;; tweak evil's configuration before loading it
+	       (setq evil-want-integration t) ;; this is optional since it's already set to true by default
+	       (setq evil-want-keybinding nil)
+	       (setq evil-vsplit-window-right t)
+	       (setq evil-split-window-below t)
+	       (evil-mode))
+  (use-package evil-collection ;; allows use of evil keybindings in use cases beyond text editing
+	       :after evil
+	       :ensure t
+	       :config
+	       (evil-collection-init))
+#+end_src
+
+** improve interface
+#+begin_src emacs-lisp
+  (tool-bar-mode -1)
+  (menu-bar-mode -1)
+  (defalias 'yes-or-no-p 'y-or-n-p)
+#+end_src
+
+** install which-key to help learn commands
+#+begin_src emacs-lisp
+  (add-to-list 'load-path "elpa/which-key-20220518.1941/which-key.el")
+  (use-package which-key)
+  (require 'which-key)
+  (which-key-mode)
+#+end_src
+
+
+** text and org settings
+#+begin_src emacs-lisp
+  (setq org-hide-leading-stars t)
+  (setq org-hide-emphasis-markers t)
+#+end_src
+
+
+** enable automatic visual-line mode
+#+begin_src emacs-lisp
+  (with-eval-after-load 'org
+    (add-hook 'org-mode-hook #'visual-line-mode))
+#+end_src
+
+
+** set splash screen back to default and respect history (https://www.ecb.torontomu.ca/~elf/emacs/logo/logo-appendix.html)
+#+begin_src emacs-lisp
+  (setq fancy-splash-image (expand-file-name "/Users/matthewstachyra/Desktop/other/default.xpm"))
+#+end_src
